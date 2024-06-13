@@ -1,5 +1,5 @@
 import adapter from '@sveltejs/adapter-auto';
-import sveltePreprocess from "svelte-preprocess"
+import sveltePreprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -7,7 +7,7 @@ const config = {
 	// for more information about preprocessors
 	preprocess: sveltePreprocess({
 		scss: {
-			prependData: '@use "./src/styles/_functions";'
+			prependData: '@use "./src/styles/_functions"; @use "@unsass/breakpoint";'
 		}
 	}),
 
