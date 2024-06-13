@@ -5,6 +5,12 @@
 <h1>Welcome to SvelteKit</h1>
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 
+<input type="text" />
+<select name="" id="">
+	<option value="1">Hello</option>
+</select>
+<button>Button</button>
+
 <style lang="scss">
 	h1 {
 		color: blue;
