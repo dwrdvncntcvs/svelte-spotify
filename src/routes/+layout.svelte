@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LogoutButton, Navigation } from '$lib';
+	import { Header, LogoutButton, Navigation } from '$lib';
 	import '$styles/main.scss';
 	import 'modern-normalize/modern-normalize.css';
 
@@ -28,7 +28,7 @@
 	<div id="content">
 		<div id="topbar" bind:this={topbar}>
 			<div class="topbar-bg" style:background-color="var(--header-color)" style:opacity></div>
-			<p>Hello WOrld</p>
+			<Header />
 		</div>
 		<main id="main-content" class:logged-in={user}>
 			<slot />
@@ -60,6 +60,11 @@
 					top: 0;
 					left: 0;
 					z-index: -1;
+				}
+
+				@include breakpoint.up('md') {
+					width: calc(100% - var(--side-bar-width));
+					padding: 0 30px;
 				}
 			}
 
