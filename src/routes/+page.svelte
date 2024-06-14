@@ -4,14 +4,9 @@
 	export let data;
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<p>Hello World</p>
 
-<input type="text" />
-<select name="" id="">
-	<option value="1">Hello</option>
-</select>
-<button>Button</button>
+<div style="height: 10000px"></div>
 
 <style lang="scss">
 	h1 {
