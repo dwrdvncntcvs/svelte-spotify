@@ -5,6 +5,8 @@
 	export let data;
 </script>
 
-{data.user?.display_name}
+{#if data.user}
+	{data.user?.display_name}
+{/if}
 
 <slot />
