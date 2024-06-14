@@ -8,9 +8,26 @@
 	$: user = data.user;
 </script>
 
-{#if user}
-	<p>Hi there! {user.display_name}</p>
-	<LogoutButton />
-{/if}
+<div id="main">
+	<div id="content">
+		<main id="main-content">
+			<slot />
+		</main>
+	</div>
+</div>
 
-<slot />
+<style lang="scss">
+	#main {
+		#content {
+			#main-content {
+				width: 100%;
+				height: 100%;
+				padding: 30px 15px 60px;
+
+				@include breakpoint.up('md') {
+					padding: 30px 30px 60px;
+				}
+			}
+		}
+	}
+</style>
