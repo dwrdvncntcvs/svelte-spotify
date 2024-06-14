@@ -2,8 +2,6 @@
 	import '$styles/main.scss';
 
 	export let data;
-
-	console.log('Data: ', data.user);
 </script>
 
 <h1>Welcome to SvelteKit</h1>

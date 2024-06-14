@@ -1,12 +1,16 @@
 <script lang="ts">
-	import 'modern-normalize/modern-normalize.css';
+	import { LogoutButton } from '$lib';
 	import '$styles/main.scss';
+	import 'modern-normalize/modern-normalize.css';
 
 	export let data;
+
+	$: user = data.user;
 </script>
 
-{#if data.user}
-	{data.user?.display_name}
+{#if user}
+	<p>Hi there! {user.display_name}</p>
+	<LogoutButton />
 {/if}
 
 <slot />
