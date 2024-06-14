@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LogoutButton } from '$lib';
+	import { LogoutButton, Navigation } from '$lib';
 	import '$styles/main.scss';
 	import 'modern-normalize/modern-normalize.css';
 
@@ -9,6 +9,11 @@
 </script>
 
 <div id="main">
+	{#if user}
+		<div id="sidebar">
+			<Navigation desktop />
+		</div>
+	{/if}
 	<div id="content">
 		<main id="main-content">
 			<slot />
@@ -18,7 +23,11 @@
 
 <style lang="scss">
 	#main {
+		display: flex;
+
 		#content {
+			flex: 1;
+
 			#main-content {
 				width: 100%;
 				height: 100%;
