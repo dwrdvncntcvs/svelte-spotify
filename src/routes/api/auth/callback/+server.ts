@@ -1,5 +1,5 @@
 import { BASE_URL, SPOTIFY_APP_CLIENT_ID, SPOTIFY_APP_CLIENT_SECRET } from '$env/static/private';
-import { error, json, redirect, type RequestHandler } from '@sveltejs/kit';
+import { error, redirect, type RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ url, cookies, fetch }) => {
 	const searchParams = url.searchParams;
