@@ -114,3 +114,7 @@ p {
 	outline: 2px solid;
 	font-weight: 500;
 }
+
+#nprogress .bar {
+	background-color: var(--accent-color) !important;
+}

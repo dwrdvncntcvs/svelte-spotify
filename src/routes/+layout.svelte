@@ -4,6 +4,13 @@
 	import '$styles/main.scss';
 	import 'modern-normalize/modern-normalize.css';
 	import { page } from '$app/stores';
+	import NProgress from 'nprogress';
+	import 'nprogress/nprogress.css';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
+
+	NProgress.configure({
+		showSpinner: false
+	});
 
 	let topbar: HTMLElement;
 	let scrollY: number;
@@ -17,6 +24,14 @@
 	}
 
 	$: user = data.user;
+
+	afterNavigate(() => {
+		NProgress.done();
+	});
+
+	beforeNavigate(() => {
+		NProgress.start();
+	});
 </script>
 
 <svelte:window bind:scrollY />
