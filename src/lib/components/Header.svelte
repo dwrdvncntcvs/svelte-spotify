@@ -4,8 +4,20 @@
 
 	import { page } from '$app/stores';
 	import { tippy } from '$actions';
+	import { onDestroy, onMount } from 'svelte';
+	import type { Instance, Props } from 'tippy.js';
 
 	$: user = $page.data.user;
+
+	const handleTippyMount = (instance: Instance<Props>) => {
+		const template = document.getElementById('profile-menu');
+
+		if (template) {
+			template.style.display = 'block';
+			instance.setContent(template);
+			instance.setProps({ theme: 'menu' });
+		}
+	};
 </script>
 
 <div class="content">
@@ -19,17 +31,11 @@
 					class="profile-button"
 					use:tippy={{
 						content: document.getElementById('profile-menu') || undefined,
-						onMount: (instance) => {
-							const template = document.getElementById('profile-menu');
-
-							if (template) {
-								template.style.display = 'block';
-								instance.setContent(template);
-							}
-						},
+						onMount: handleTippyMount,
 						trigger: 'click',
 						placement: 'bottom-end',
-						interactive: true
+						interactive: true,
+						theme: 'menu'
 					}}
 				>
 					<img src={user.images[0].url} alt="" />
@@ -101,6 +107,39 @@
 
 		&:hover {
 			background-color: var(--accent-color);
+		}
+	}
+
+	.profile-menu-content {
+		padding: 5px 0px;
+		ul {
+			padding: 0;
+			margin: 0;
+			list-style: none;
+
+			li {
+				&:hover {
+					background-image: linear-gradient(rgba(255, 255, 255, 0.07) 0 0);
+				}
+				a :global(svg) {
+					vertical-align: middle;
+					margin-left: 10px;
+				}
+
+				a,
+				:global(button) {
+					padding: 10px 15px;
+					display: inline-block;
+					background: none;
+					border: none;
+					text-decoration: none;
+					cursor: pointer;
+					color: var(--menu-text-color);
+					width: 100%;
+					text-align: start;
+					font-size: functions.toRem(14);
+				}
+			}
 		}
 	}
 </style>

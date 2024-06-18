@@ -1,4 +1,5 @@
 import tippy, { type Props } from 'tippy.js';
+import 'tippy.js/dist/tippy.css'
 
 export default (node: HTMLElement, options?: Partial<Props>) => {
 	const instance = tippy(node, options);
@@ -8,7 +9,7 @@ export default (node: HTMLElement, options?: Partial<Props>) => {
 			instance.setProps(newOptions);
 		},
 		destroy() {
-			instance.destroy();
+			instance.destroy()
 		}
 	};
 };
