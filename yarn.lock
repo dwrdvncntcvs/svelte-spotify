@@ -1220,10 +1220,10 @@ lodash.merge@^4.6.2:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
-lucide-svelte@^0.394.0:
-  version "0.394.0"
-  resolved "https://registry.yarnpkg.com/lucide-svelte/-/lucide-svelte-0.394.0.tgz#96aecf8d614ea2752a02b06f7d14b6d68da2c835"
-  integrity sha512-txlzIrP/uTF5dIg0byuzbfYIwL/4lhkPOMukr/RoZsSeSExRdbGHq/i/oMiDx0XhaaJHQF6w04XpvBXrmObGVA==
+lucide-svelte@^0.395.0:
+  version "0.395.0"
+  resolved "https://registry.yarnpkg.com/lucide-svelte/-/lucide-svelte-0.395.0.tgz#e7383add33725b68a79c7ac375cb8a76247866ed"
+  integrity sha512-gl4HIIGUyj3seZf/CQ6vG38oMnNmdO1lcBQaMsB5pFpnL1T13qlfqjMjfTCnsKMFjiIFr3LttE/LFVi/GXmV0A==
 
 magic-string@^0.30.10, magic-string@^0.30.4, magic-string@^0.30.5:
   version "0.30.10"

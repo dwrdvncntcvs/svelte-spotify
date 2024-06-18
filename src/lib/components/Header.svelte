@@ -5,7 +5,6 @@
 <div class="content">
 	<div class="left">
 		<Navigation desktop={false} />
-		Left
 	</div>
 	<div class="right">Right</div>
 </div>

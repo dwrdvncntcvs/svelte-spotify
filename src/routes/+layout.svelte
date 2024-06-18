@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { Header, LogoutButton, Navigation } from '$lib';
 	import '$styles/main.scss';
 	import 'modern-normalize/modern-normalize.css';
@@ -22,12 +23,18 @@
 <div id="main">
 	{#if user}
 		<div id="sidebar">
-			<Navigation desktop />
+			{#if browser}
+				<Navigation desktop />
+			{/if}
 		</div>
 	{/if}
 	<div id="content">
 		<div id="topbar" bind:this={topbar}>
-			<div class="topbar-bg" style:background-color="var(--header-color)" style:opacity></div>
+			<div
+				class="topbar-bg"
+				style:background-color="var(--header-color)"
+				style:opacity={`${opacity}`}
+			></div>
 			<Header />
 		</div>
 		<main id="main-content" class:logged-in={user}>
