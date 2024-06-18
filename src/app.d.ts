@@ -6,10 +6,16 @@ declare global {
 		// interface Locals {}
 		interface PageData {
 			user: SpotifyApi.CurrentUsersProfileResponse | null;
-			title?: string
+			title?: string;
 		}
 		// interface PageState {}
 		// interface Platform {}
+	}
+
+	namespace globalThis {
+		interface Window {
+			refreshPromise: Promise<Response> | null;
+		}
 	}
 }
 
