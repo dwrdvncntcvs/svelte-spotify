@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Navigation } from '$lib';
-	import { ChevronDown } from 'lucide-svelte';
+	import { LogoutButton, Navigation } from '$lib';
+	import { ChevronDown, ExternalLink } from 'lucide-svelte';
 
 	import { page } from '$app/stores';
+	import { tippy } from '$actions';
 
 	$: user = $page.data.user;
 </script>
@@ -14,7 +15,23 @@
 	<div class="right">
 		<div id="profile-button">
 			{#if user?.images && user?.images.length > 0}
-				<button class="profile-button">
+				<button
+					class="profile-button"
+					use:tippy={{
+						content: document.getElementById('profile-menu') || undefined,
+						onMount: (instance) => {
+							const template = document.getElementById('profile-menu');
+
+							if (template) {
+								template.style.display = 'block';
+								instance.setContent(template);
+							}
+						},
+						trigger: 'click',
+						placement: 'bottom-end',
+						interactive: true
+					}}
+				>
 					<img src={user.images[0].url} alt="" />
 					<p class="profile-name">
 						{user?.display_name} <span class="visually-hidden">Profile Menu</span>
@@ -22,6 +39,23 @@
 					<ChevronDown class="profile-arrow" size={20} />
 				</button>
 			{/if}
+		</div>
+		<div id="profile-menu" style="display: none;">
+			<div class="profile-menu-content">
+				<ul>
+					<li>
+						<a href={user?.external_urls.spotify} target="_blank" rel="noopener noreferrer"
+							>View on Spotify <ExternalLink focusable="false" aria-hidden /></a
+						>
+					</li>
+					<li>
+						<a href="/profile">View Profile</a>
+					</li>
+					<li>
+						<LogoutButton />
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

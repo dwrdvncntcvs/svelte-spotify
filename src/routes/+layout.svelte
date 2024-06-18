@@ -3,6 +3,7 @@
 	import { Header, LogoutButton, Navigation } from '$lib';
 	import '$styles/main.scss';
 	import 'modern-normalize/modern-normalize.css';
+	import 'tippy.js/dist/tippy.css';
 
 	let topbar: HTMLElement;
 	let scrollY: number;

@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\dwrdvncntcvs\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @types/crypto
+  C:\Program Files\nodejs\node.exe C:\Users\dwrdvncntcvs\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @types/tippy.js
 
 PATH: 
   C:\Users\dwrdvncntcvs\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\dwrdvncntcvs\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;%NVM_HOME%;%NVM_SYMLINK%;C:\Program Files\dotnet;C:\Program Files\Git\cmd;C:\Users\dwrdvncntcvs\AppData\Local\Microsoft\WindowsApps;C:\Users\dwrdvncntcvs\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\dwrdvncntcvs\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\dwrdvncntcvs\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fcrypto: Not found
+  Error: https://registry.yarnpkg.com/@types%2ftippy.js: Not found
       at params.callback [as _callback] (C:\Users\dwrdvncntcvs\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
       at self.callback (C:\Users\dwrdvncntcvs\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
       at Request.emit (node:events:519:28)
@@ -65,11 +65,13 @@ npm manifest:
   	"type": "module",
   	"dependencies": {
   		"@fontsource/metropolis": "^5.0.11",
+  		"@types/spotify-api": "^0.0.25",
   		"@types/uuid": "^9.0.8",
   		"@unsass/breakpoint": "^2.4.0",
-  		"crypto": "^1.0.1",
+  		"lucide-svelte": "^0.395.0",
   		"modern-normalize": "^2.0.0",
   		"pkce-gen": "^1.1.0",
+  		"tippy.js": "^6.3.7",
   		"uuid": "^10.0.0"
   	}
   }
@@ -331,6 +333,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.25.tgz#f077fdc0b5d0078d30893396ff4827a13f99e817"
     integrity sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==
   
+  "@popperjs/core@^2.9.0":
+    version "2.11.8"
+    resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
+    integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
+  
   "@rollup/rollup-android-arm-eabi@4.18.0":
     version "4.18.0"
     resolved "https://registry.yarnpkg.com/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.18.0.tgz#bbd0e616b2078cd2d68afc9824d1fadb2f2ffd27"
@@ -483,6 +490,11 @@ Lockfile:
     version "2.0.10"
     resolved "https://registry.yarnpkg.com/@types/pug/-/pug-2.0.10.tgz#52f8dbd6113517aef901db20b4f3fca543b88c1f"
     integrity sha512-Sk/uYFOBAB7mb74XcpizmH0KOR2Pv3D2Hmrh1Dmy5BmK3MpdSa5kqZcg6EKBdklU0bFXX9gCfzvpnyUehrPIuA==
+  
+  "@types/spotify-api@^0.0.25":
+    version "0.0.25"
+    resolved "https://registry.yarnpkg.com/@types/spotify-api/-/spotify-api-0.0.25.tgz#9dabb3b0a1f0527ed61936ebf8a80c1d138c27c3"
+    integrity sha512-okhoy0U9fPWtwqCfbDyW8VxamhqvXE0gXIVeMOh5HcvEFQvWW2X0VsvdiX/OyiGQpZbZiOJXIGrbnIPfK0AIpA==
   
   "@types/uuid@^9.0.8":
     version "9.0.8"
@@ -747,11 +759,6 @@ Lockfile:
       path-key "^3.1.0"
       shebang-command "^2.0.0"
       which "^2.0.1"
-  
-  crypto@^1.0.1:
-    version "1.0.1"
-    resolved "https://registry.yarnpkg.com/crypto/-/crypto-1.0.1.tgz#2af1b7cad8175d24c8a1b0778255794a21803037"
-    integrity sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==
   
   css-tree@^2.3.1:
     version "2.3.1"
@@ -1300,6 +1307,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
     integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
   
+  lucide-svelte@^0.395.0:
+    version "0.395.0"
+    resolved "https://registry.yarnpkg.com/lucide-svelte/-/lucide-svelte-0.395.0.tgz#e7383add33725b68a79c7ac375cb8a76247866ed"
+    integrity sha512-gl4HIIGUyj3seZf/CQ6vG38oMnNmdO1lcBQaMsB5pFpnL1T13qlfqjMjfTCnsKMFjiIFr3LttE/LFVi/GXmV0A==
+  
   magic-string@^0.30.10, magic-string@^0.30.4, magic-string@^0.30.5:
     version "0.30.10"
     resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.10.tgz#123d9c41a0cb5640c892b041d4cfb3bd0aa4b39e"
@@ -1789,6 +1801,13 @@ Lockfile:
     dependencies:
       globalyzer "0.1.0"
       globrex "^0.1.2"
+  
+  tippy.js@^6.3.7:
+    version "6.3.7"
+    resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-6.3.7.tgz#8ccfb651d642010ed9a32ff29b0e9e19c5b8c61c"
+    integrity sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==
+    dependencies:
+      "@popperjs/core" "^2.9.0"
   
   to-regex-range@^5.0.1:
     version "5.0.1"
