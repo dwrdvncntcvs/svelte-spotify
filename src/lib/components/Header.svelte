@@ -5,7 +5,7 @@
 	import { page } from '$app/stores';
 	import { clickOutside } from '$actions';
 
-	let showOptions = false;
+	let optionElement: HTMLDivElement | undefined;
 
 	$: user = $page.data.user;
 </script>
@@ -21,13 +21,15 @@
 					class="profile-button-wrapper"
 					use:clickOutside
 					on:clickOutside={() => {
-						if (showOptions) showOptions = false;
+						if (optionElement) optionElement.style.display = 'none';
 					}}
 				>
 					<button
 						class="profile-button"
 						on:click={() => {
-							showOptions = !showOptions;
+							if (optionElement)
+								optionElement.style.display =
+									optionElement?.style.display === 'none' ? 'block' : 'none';
 						}}
 					>
 						<img src={user.images[0].url} alt="" />
@@ -36,25 +38,23 @@
 						</p>
 						<ChevronDown class="profile-arrow" size={20} />
 					</button>
-					{#if showOptions}
-						<div id="profile-menu">
-							<div class="profile-menu-content">
-								<ul>
-									<li>
-										<a href={user?.external_urls.spotify} target="_blank" rel="noopener noreferrer"
-											>View on Spotify <ExternalLink focusable="false" aria-hidden /></a
-										>
-									</li>
-									<li>
-										<a href="/profile">View Profile</a>
-									</li>
-									<li>
-										<LogoutButton />
-									</li>
-								</ul>
-							</div>
+					<div id="profile-menu" bind:this={optionElement} style="display: none;">
+						<div class="profile-menu-content">
+							<ul>
+								<li>
+									<a href={user?.external_urls.spotify} target="_blank" rel="noopener noreferrer"
+										>View on Spotify <ExternalLink focusable="false" aria-hidden /></a
+									>
+								</li>
+								<li>
+									<a href="/profile">View Profile</a>
+								</li>
+								<li>
+									<LogoutButton />
+								</li>
+							</ul>
 						</div>
-					{/if}
+					</div>
 				</div>
 			{/if}
 		</div>
@@ -68,6 +68,10 @@
 		align-items: center;
 		width: 100%;
 		height: 100%;
+
+		:global(html.no-js) & {
+			justify-content: start;
+		}
 	}
 
 	.profile-button-wrapper {
@@ -77,16 +81,37 @@
 			position: absolute;
 			margin-top: 10px;
 			right: 0;
+
+			:global(html.no-js) & {
+				position: relative;
+				margin: 0;
+				padding: 0;
+				z-index: 100;
+				display: block !important;
+			}
+
 			.profile-menu-content {
 				padding: 5px 0px;
 				background-color: var(--menu-bg-color);
+
 				border-radius: 5px;
+
+				:global(html.no-js) & {
+					padding: 0;
+					background-color: transparent;
+				}
+
 				ul {
 					padding: 0;
 					margin: 0;
 					list-style: none;
 
 					li {
+						:global(html.no-js) & {
+							display: inline-block;
+							height: 100%;
+						}
+
 						&:hover {
 							background-image: linear-gradient(rgba(255, 255, 255, 0.07) 0 0);
 						}
@@ -125,6 +150,10 @@
 			color: var(--text-color);
 			cursor: pointer;
 			transition: all ease 0.2s;
+
+			:global(html.no-js) & {
+				display: none;
+			}
 
 			.profile-name {
 				font-size: functions.toRem(14);

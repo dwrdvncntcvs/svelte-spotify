@@ -217,6 +217,13 @@
 				overflow: auto;
 				display: none;
 
+				:global(html.no-js) & {
+					@include breakpoint.down('md') {
+						display: block !important;
+						height: auto;
+					}
+				}
+
 				img {
 					max-width: 100%;
 					width: 130px;
@@ -268,6 +275,10 @@
 		}
 
 		:global(.menu-button) {
+			:global(html.no-js) & {
+				display: none !important;
+			}
+
 			@include breakpoint.up('md') {
 				display: none;
 			}

@@ -45,9 +45,7 @@
 <div id="main">
 	{#if user}
 		<div id="sidebar">
-			{#if browser}
-				<Navigation desktop />
-			{/if}
+			<Navigation desktop />
 		</div>
 	{/if}
 	<div id="content">
@@ -68,6 +66,11 @@
 <style lang="scss">
 	#main {
 		display: flex;
+		:global(html.no-js) & {
+			@include breakpoint.down('md') {
+				display: block;
+			}
+		}
 
 		#content {
 			flex: 1;
@@ -82,6 +85,17 @@
 				z-index: 100;
 				color: var(--text-color);
 
+				:global(html.no-js) & {
+					position: sticky;
+					top: 0;
+					background-color: var(--header-color);
+					height: auto;
+					padding: 10px 20px;
+
+					@include breakpoint.up('md') {
+						position: fixed;
+					}
+				}
 				.topbar-bg {
 					position: absolute;
 					width: 100%;
@@ -102,7 +116,13 @@
 				height: 100%;
 				padding: 30px 15px 60px;
 				&.logged-in {
-					margin-top: var(--header-height);
+					padding-top: calc(30px + var(--header-height));
+
+					:global(html.no-js) & {
+						@include breakpoint.down('md') {
+							padding-top: 30px;
+						}
+					}
 				}
 
 				@include breakpoint.up('md') {
