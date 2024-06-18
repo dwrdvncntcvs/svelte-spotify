@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { Header, LogoutButton, Navigation } from '$lib';
+	import { Header, Navigation } from '$lib';
 	import '$styles/main.scss';
 	import 'modern-normalize/modern-normalize.css';
+	import { page } from '$app/stores';
 
 	let topbar: HTMLElement;
 	let scrollY: number;
@@ -19,6 +20,12 @@
 </script>
 
 <svelte:window bind:scrollY />
+
+<svelte:head>
+	<title>Spotify {$page.data.title ? `- ${$page.data.title}` : ''}</title>
+</svelte:head>
+
+<a href="#main-content" class="skip-link">Skip Link</a>
 
 <div id="main">
 	{#if user}
