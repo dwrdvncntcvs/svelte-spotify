@@ -28,22 +28,20 @@ export const load: PageLoad = async ({ fetch: _fetch, parent }) => {
 	const [newReleasesRes, featuredPlaylistRes, userPlaylistRes, ...randomCategoriesRes] =
 		await Promise.all([newReleases, featuredPlaylist, userPlaylist, ...randomCategoriesPromises]);
 
-	console.log(randomCategoriesRes);
-
 	return {
 		newReleases: newReleasesRes.ok
-			? (newReleasesRes.json() as Promise<SpotifyApi.ListOfNewReleasesResponse>)
+			? ((await newReleasesRes.json()) as SpotifyApi.ListOfNewReleasesResponse)
 			: undefined,
 		featuredPlaylist: featuredPlaylistRes.ok
-			? (featuredPlaylistRes.json() as Promise<SpotifyApi.ListOfFeaturedPlaylistsResponse>)
+			? ((await featuredPlaylistRes.json()) as SpotifyApi.ListOfFeaturedPlaylistsResponse)
 			: undefined,
 		userPlaylist: userPlaylistRes.ok
-			? (userPlaylistRes.json() as Promise<SpotifyApi.ListOfUsersPlaylistsResponse>)
+			? ((await userPlaylistRes.json()) as SpotifyApi.ListOfUsersPlaylistsResponse)
 			: undefined,
 		homeCategories: randomCategories,
-		categoriesPlaylists: Promise.all(
-			randomCategoriesRes.map((val) =>
-				val.ok ? (val.json() as Promise<SpotifyApi.CategoryPlaylistsResponse>) : undefined
+		categoriesPlaylists: await Promise.all(
+			randomCategoriesRes.map(async (val) =>
+				val.ok ? ((await val.json()) as SpotifyApi.CategoryPlaylistsResponse) : undefined
 			)
 		)
 	};

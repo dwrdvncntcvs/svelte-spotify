@@ -4,7 +4,9 @@ import { error, json, type RequestHandler } from '@sveltejs/kit';
 export const GET: RequestHandler = async ({ cookies, params, fetch, url }) => {
 	const accessToken = cookies.get('access_token');
 
-	const response = await fetch(`${SPOTIFY_BASE_URL}/${params.path}?${url.search}`, {
+	console.log('URL Search: ', url.search);
+
+	const response = await fetch(`${SPOTIFY_BASE_URL}/${params.path}${url.search}`, {
 		headers: {
 			Authorization: `Bearer ${accessToken}`
 		}
