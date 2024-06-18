@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '$lib';
+	import { Button, Card } from '$lib';
 	import type { PageData } from './$types.js';
 
 	export let data: PageData;
@@ -69,10 +69,7 @@
 		</div>
 		<div class="grid-items">
 			{#each items as item (item.id)}
-				<div style="background-color: var(--border);">
-					<h5>{item.type}</h5>
-					<h3>{item.name}</h3>
-				</div>
+				<Card {item} />
 			{/each}
 		</div>
 	</section>
@@ -80,6 +77,7 @@
 
 <style lang="scss">
 	.content-row {
+		margin-bottom: 40px;
 		.content-header {
 			display: flex;
 			justify-content: space-between;
