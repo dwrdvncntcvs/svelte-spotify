@@ -16,7 +16,9 @@
 			{#if user?.images && user?.images.length > 0}
 				<button class="profile-button">
 					<img src={user.images[0].url} alt="" />
-					{user?.display_name} <span class="visually-hidden">Profile Menu</span>
+					<p class="profile-name">
+						{user?.display_name} <span class="visually-hidden">Profile Menu</span>
+					</p>
 					<ChevronDown class="profile-arrow" size={20} />
 				</button>
 			{/if}
@@ -44,6 +46,12 @@
 		color: var(--text-color);
 		cursor: pointer;
 		transition: all ease 0.2s;
+
+		.profile-name {
+			font-size: functions.toRem(14);
+			padding: 0;
+			margin: 0;
+		}
 
 		:global(.profile-arrow) {
 			margin-left: 3px;
