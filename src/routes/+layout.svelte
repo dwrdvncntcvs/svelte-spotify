@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { Header, Navigation } from '$lib';
+	import { Header, Navigation, Toasts } from '$lib';
 	import '$styles/main.scss';
 	import 'modern-normalize/modern-normalize.css';
 	import { page } from '$app/stores';
@@ -42,6 +42,8 @@
 </svelte:head>
 
 <a href="#main-content" class="skip-link">Skip Link</a>
+
+<Toasts />
 
 <div id="main">
 	{#if user}

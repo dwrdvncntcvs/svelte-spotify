@@ -20,7 +20,8 @@ const config = {
 			$styles: './src/styles',
 			$assets: './src/assets',
 			$actions: './src/lib/actions',
-			$helpers: './src/lib/helpers'
+			$helpers: './src/lib/helpers',
+			$store: './src/lib/store'
 		}
 	}
 };
