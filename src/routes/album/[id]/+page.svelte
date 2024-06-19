@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getCopyrightSymbol } from '$helpers';
-	import { ItemPage } from '$lib';
+	import { ItemPage, TrackList } from '$lib';
 
 	export let data;
 
@@ -23,15 +23,8 @@
 			>{`${album.total_tracks} Track${album.total_tracks > 1 ? 's' : ''}`}</span
 		>
 	</p>
-	<div class="tracks">
-		<ul>
-			{#each album.tracks.items as track}
-				<li>{track.name}</li>
-			{/each}
-		</ul>
-	</div>
 
-	<div style="height: 1000px;"></div>
+	<TrackList tracks={album.tracks.items} />
 
 	<div class="credits">
 		<p class="date">
