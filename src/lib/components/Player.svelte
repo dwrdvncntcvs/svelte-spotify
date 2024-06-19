@@ -20,6 +20,7 @@
 
 	const onPlay = () => {
 		if (currentAudio && currentAudio !== audio) {
+			audio.currentTime = 0;
 			currentAudio.currentTime = 0;
 			currentAudio.pause();
 		}

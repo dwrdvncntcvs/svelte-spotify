@@ -2,6 +2,10 @@
 	import { msToTime } from '$helpers';
 	import { Player } from '$lib';
 	import { Clock8, ListPlus } from 'lucide-svelte';
+	import playing from '$assets/playing.gif';
+
+	let currentlyPlayingTrack: string | null = null;
+	let isPlayerPaused: boolean = false;
 
 	export let tracks: SpotifyApi.TrackObjectFull[] | SpotifyApi.TrackObjectSimplified[];
 </script>
@@ -21,18 +25,25 @@
 	</div>
 	{#each tracks as track, i (track.id)}
 		{@const number = i + 1}
-		<div class="row">
+		<div class="row" class:is-current={currentlyPlayingTrack === track.id}>
 			<div class="number-col">
-				<span class="number">{number}</span>
-				<Player
-					{track}
-					on:play={(e) => {
-						console.log(e.detail.track);
-					}}
-					on:pause={(e) => {
-						console.log(e.detail.track);
-					}}
-				/>
+				{#if currentlyPlayingTrack === track.id && !isPlayerPaused}
+					<img src={playing} class="playing-gif" alt="" />
+				{:else}
+					<span class="number">{number}</span>
+				{/if}
+				<div class="player">
+					<Player
+						{track}
+						on:play={(e) => {
+							currentlyPlayingTrack = e.detail.track.id;
+							isPlayerPaused = false;
+						}}
+						on:pause={(e) => {
+							isPlayerPaused = e.detail.track.id === currentlyPlayingTrack;
+						}}
+					/>
+				</div>
 			</div>
 			<div class="info-col">
 				<div class="track-title">
@@ -66,6 +77,12 @@
 <style lang="scss">
 	.tracks {
 		.row {
+			&.is-current {
+				.info-col .track-title h4,
+				.number-col span.number {
+					color: var(--accent-color);
+				}
+			}
 			display: flex;
 			align-items: center;
 			padding: 7px 5px;
@@ -92,6 +109,16 @@
 			&:not(.header) {
 				&:hover {
 					background-color: rgba(255, 255, 255, 0.05);
+					.number-col {
+						.player {
+							display: block;
+						}
+
+						span.number,
+						.playing-gif {
+							display: none;
+						}
+					}
 				}
 			}
 
@@ -101,6 +128,14 @@
 				justify-content: flex-end;
 				align-items: center;
 				margin-right: 15px;
+
+				.playing-gif {
+					width: 12px;
+				}
+
+				.player {
+					display: none;
+				}
 
 				span.number {
 					color: var(--light-gray);
