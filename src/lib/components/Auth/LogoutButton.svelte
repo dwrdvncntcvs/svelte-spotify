@@ -1,5 +1,5 @@
 <script>
-	import { invalidateAll } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { Button } from '$lib';
 </script>
 
@@ -14,8 +14,11 @@
 			}
 		});
 
-		if (response.ok) await invalidateAll();
+		if (response.ok) {
+			await invalidateAll();
+			goto('/login');
+		}
 	}}
 >
-	<Button element='button' type="submit"> Logout </Button>
+	<Button element="button" type="submit">Logout</Button>
 </form>
