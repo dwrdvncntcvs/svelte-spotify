@@ -2,6 +2,7 @@
 	import { applyAction, enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import { Button, ItemPage, TrackList } from '$lib';
+	import { toasts } from '$store';
 	import { Heart } from 'lucide-svelte';
 
 	export let data;
@@ -44,7 +45,7 @@
 		if (res.ok) {
 			tracks = { ...data, items: [...tracks.items, ...data.items] };
 		} else {
-			alert(data.error.message || 'Could not load data');
+			toasts.error(data.error.message);
 		}
 
 		isLoading = false;
@@ -70,11 +71,15 @@
 					isLoadingFollowAction = true;
 					return async ({ result }) => {
 						isLoadingFollowAction = false;
-						await applyAction(result);
-						followButton.focus();
 						if (result.type === 'success') {
+							await applyAction(result);
 							isFollowing = !isFollowing;
+						} else if (result.type === 'failure') {
+							toasts.error(result.data?.followError);
+						} else {
+							await applyAction(result);
 						}
+						followButton.focus();
 					};
 				}}
 				method="POST"
