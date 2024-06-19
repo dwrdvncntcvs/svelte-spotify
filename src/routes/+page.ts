@@ -21,6 +21,7 @@ export const load: PageLoad = async ({ fetch: _fetch, parent }) => {
 		? categoriesData.categories.items.sort(() => 0.5 - Math.random()).slice(0, 3)
 		: [];
 
+		
 	const randomCategoriesPromises = randomCategories.map((val) =>
 		fetch(`/api/spotify/browse/categories/${val.id}/playlists?limit=${dataLimit}`)
 	);

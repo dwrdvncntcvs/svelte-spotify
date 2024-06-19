@@ -23,7 +23,7 @@
 		</div>
 		<div class="actions-col"></div>
 	</div>
-	{#each tracks as track, i (track.id)}
+	{#each tracks as track, i}
 		{@const number = i + 1}
 		<div class="row" class:is-current={currentlyPlayingTrack === track.id}>
 			<div class="number-col">
@@ -244,7 +244,7 @@
 					:global(html.no-js) & {
 						width: 100%;
 						display: flex;
-                        justify-content: center;
+						justify-content: center;
 					}
 				}
 			}

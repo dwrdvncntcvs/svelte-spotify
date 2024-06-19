@@ -9,7 +9,7 @@
 </script>
 
 <div class="card {item.type}">
-	{#if item.images.length}
+	{#if item.images?.length}
 		<img loading="lazy" src={item.images[0].url} alt="{item.type} cover for {item.name}" />
 	{:else}
 		<div class="cover-placeholder">
