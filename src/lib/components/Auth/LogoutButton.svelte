@@ -1,5 +1,6 @@
 <script>
 	import { invalidateAll } from '$app/navigation';
+	import { Button } from '$lib';
 </script>
 
 <form
@@ -16,5 +17,5 @@
 		if (response.ok) await invalidateAll();
 	}}
 >
-	<button type="submit"> Logout </button>
+	<Button element='button' type="submit"> Logout </Button>
 </form>

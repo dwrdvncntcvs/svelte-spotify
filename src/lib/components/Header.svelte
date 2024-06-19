@@ -133,6 +133,7 @@
 							width: 100%;
 							text-align: start;
 							font-size: functions.toRem(14);
+							font-weight: 400;
 						}
 					}
 				}
