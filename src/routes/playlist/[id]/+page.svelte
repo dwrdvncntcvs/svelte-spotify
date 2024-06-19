@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { Button, ItemPage, TrackList } from '$lib';
 
 	export let data;
@@ -9,6 +10,7 @@
 	$: color = data.color;
 	$: image = playlist?.images?.length > 0 ? playlist.images[0].url : undefined;
 	$: tracks = playlist.tracks;
+	$: currentPage = $page.url.searchParams.get('page') || 1;
 
 	let isLoading = false;
 
@@ -61,6 +63,34 @@
 				</Button>
 			</div>
 		{/if}
+		<div class="pagination">
+			<div class="previous">
+				{#if tracks.previous}
+					<Button
+						element="a"
+						variant="outline"
+						href="{$page.url.pathname}?{new URLSearchParams({
+							page: `${Number(currentPage) - 1}`
+						}).toString()}"
+					>
+						Previous Page
+					</Button>
+				{/if}
+			</div>
+			<div class="next">
+				{#if tracks.next}
+					<Button
+						element="a"
+						variant="outline"
+						href="{$page.url.pathname}?{new URLSearchParams({
+							page: `${Number(currentPage) + 1}`
+						}).toString()}"
+					>
+						Next Page
+					</Button>
+				{/if}
+			</div>
+		</div>
 	{:else}
 		<div class="empty-playlist">
 			<p>No items added to this playlist yet.</p>
@@ -107,5 +137,19 @@
 	.load-more {
 		padding: 15px;
 		text-align: center;
+
+		:global(html.no-js) & {
+			display: none;
+		}
+	}
+
+	.pagination {
+		display: none;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 40px;
+		:global(html.no-js) & {
+			display: flex;
+		}
 	}
 </style>
