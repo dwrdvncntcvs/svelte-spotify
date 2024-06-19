@@ -11,6 +11,7 @@
 	$: image = playlist?.images?.length > 0 ? playlist.images[0].url : undefined;
 	$: tracks = playlist.tracks;
 	$: currentPage = $page.url.searchParams.get('page') || 1;
+	$: isFollowing = data.isFollowing;
 
 	let isLoading = false;
 
