@@ -42,7 +42,6 @@
 		controls
 		src={track.preview_url}
 		preload="none"
-		hidden
 	/>
 
 	<button
@@ -64,6 +63,15 @@
 </div>
 
 <style lang="scss">
+	audio {
+		display: none;
+
+		:global(html.no-js) & {
+			display: block;
+			width: 100%;
+		}
+	}
+
 	.player {
 		button {
 			width: 12px;
@@ -72,6 +80,10 @@
 			border: none;
 			background: none;
 			cursor: pointer;
+
+			:global(html.no-js) & {
+				display: none;
+			}
 
 			:global(svg) {
 				fill: var(--text-color);

@@ -83,16 +83,32 @@
 					color: var(--accent-color);
 				}
 			}
+
 			display: flex;
 			align-items: center;
 			padding: 7px 5px;
 			border-radius: 4px;
+
+			@include breakpoint.down('md') {
+				:global(html.no-js) & {
+					flex-direction: column;
+					background-color: rgba(255, 255, 255, 0.03);
+					padding: 20px;
+					margin-bottom: 20px;
+				}
+			}
 
 			&.header {
 				border-bottom: 1px solid var(--border);
 				border-radius: 0;
 				padding: 5px;
 				margin-bottom: 15px;
+
+				@include breakpoint.down('md') {
+					:global(html.no-js) & {
+						display: none;
+					}
+				}
 
 				.track-title {
 					color: var(--light-gray);
@@ -129,6 +145,24 @@
 				align-items: center;
 				margin-right: 15px;
 
+				:global(html.no-js) & {
+					width: 200px;
+					display: flex;
+					align-items: center;
+
+					@include breakpoint.down('md') {
+						width: 100%;
+						margin-right: 0;
+						margin-bottom: 15px;
+					}
+
+					.player {
+						display: block;
+						width: 100%;
+						margin-left: 10px;
+					}
+				}
+
 				.playing-gif {
 					width: 12px;
 				}
@@ -145,6 +179,12 @@
 
 			.info-col {
 				flex: 1;
+
+				@include breakpoint.down('md') {
+					:global(html.no-js) & {
+						width: 100%;
+					}
+				}
 
 				.track-title {
 					display: flex;
@@ -184,6 +224,12 @@
 			}
 
 			.duration-col {
+				@include breakpoint.down('md') {
+					:global(html.no-js) & {
+						width: 100%;
+						margin-top: 10px;
+					}
+				}
 				span.duration {
 					color: var(--light-gray);
 					font-size: functions.toRem(14);
@@ -193,6 +239,14 @@
 			.actions-col {
 				width: 30px;
 				margin-left: 15px;
+
+				@include breakpoint.down('md') {
+					:global(html.no-js) & {
+						width: 100%;
+						display: flex;
+                        justify-content: center;
+					}
+				}
 			}
 		}
 	}
