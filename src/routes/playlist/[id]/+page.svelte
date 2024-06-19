@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { Button, ItemPage, TrackList } from '$lib';
+	import { Heart } from 'lucide-svelte';
 
 	export let data;
+	export let form;
 
 	$: playlist = data.playlist;
 	$: type = playlist.type;
@@ -55,6 +57,30 @@
 			<span>{playlist.tracks.total} Track{playlist.tracks.total > 0 ? 's' : ''}</span>
 		</p>
 	</div>
+
+	<div class="playlist-actions">
+		{#if data?.user?.id === playlist.owner.id}
+			<Button element="a" variant="outline">Edit PLaylist</Button>
+		{:else if isFollowing !== null}
+			<form
+				method="POST"
+				action={`?/${isFollowing ? 'unfollowPlaylist' : 'followPlaylist'}`}
+				class="follow-form"
+			>
+				<Button element="button" type="submit" variant="outline">
+					<Heart aria-hidden focusable="false" fill={isFollowing ? 'var(--text-color)' : 'none'} />
+					{isFollowing ? 'Unfollow' : 'Follow'}
+					<span class="visually-hidden">{playlist.name} playlist</span>
+				</Button>
+				{#if form?.followError}
+					<p class="error">
+						{form.followError}
+					</p>
+				{/if}
+			</form>
+		{/if}
+	</div>
+
 	{#if playlist.tracks?.items?.length}
 		<TrackList tracks={filteredTracks} />
 		{#if tracks.next}
@@ -151,6 +177,31 @@
 		margin-top: 40px;
 		:global(html.no-js) & {
 			display: flex;
+		}
+	}
+
+	.playlist-actions {
+		display: flex;
+		justify-content: flex-end;
+		margin: 10px 0 30px;
+
+		.follow-form {
+			:global(.button) {
+				display: flex;
+				align-items: center;
+
+				:global(svg) {
+					margin-right: 10px;
+					width: 22px;
+					height: 22px;
+				}
+			}
+
+			p.error {
+				text-align: right;
+				color: var(--error);
+				font-size: functions.toRem(14);
+			}
 		}
 	}
 </style>
