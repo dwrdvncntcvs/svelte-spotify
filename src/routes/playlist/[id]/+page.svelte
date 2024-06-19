@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { applyAction, enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import { Button, ItemPage, TrackList } from '$lib';
 	import { Heart } from 'lucide-svelte';
@@ -16,6 +17,8 @@
 	$: isFollowing = data.isFollowing;
 
 	let isLoading = false;
+	let isLoadingFollowAction = false;
+	let followButton: Button<'button'>;
 
 	let filteredTracks: SpotifyApi.TrackObjectFull[];
 
@@ -63,11 +66,28 @@
 			<Button element="a" variant="outline">Edit PLaylist</Button>
 		{:else if isFollowing !== null}
 			<form
+				use:enhance={() => {
+					isLoadingFollowAction = true;
+					return async ({ result }) => {
+						isLoadingFollowAction = false;
+						await applyAction(result);
+						followButton.focus();
+						if (result.type === 'success') {
+							isFollowing = !isFollowing;
+						}
+					};
+				}}
 				method="POST"
 				action={`?/${isFollowing ? 'unfollowPlaylist' : 'followPlaylist'}`}
 				class="follow-form"
 			>
-				<Button element="button" type="submit" variant="outline">
+				<Button
+					bind:this={followButton}
+					element="button"
+					type="submit"
+					variant="outline"
+					disabled={isLoadingFollowAction}
+				>
 					<Heart aria-hidden focusable="false" fill={isFollowing ? 'var(--text-color)' : 'none'} />
 					{isFollowing ? 'Unfollow' : 'Follow'}
 					<span class="visually-hidden">{playlist.name} playlist</span>
