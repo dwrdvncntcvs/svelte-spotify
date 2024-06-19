@@ -24,6 +24,7 @@
 	}
 
 	$: user = data.user;
+	$: color = $page.data.color || 'var(--header-color)';
 
 	afterNavigate(() => {
 		NProgress.done();
@@ -50,11 +51,7 @@
 	{/if}
 	<div id="content">
 		<div id="topbar" bind:this={topbar}>
-			<div
-				class="topbar-bg"
-				style:background-color="var(--header-color)"
-				style:opacity={`${opacity}`}
-			></div>
+			<div class="topbar-bg" style:background-color={color} style:opacity={`${opacity}`}></div>
 			<Header />
 		</div>
 		<main id="main-content" class:logged-in={user}>
@@ -103,6 +100,7 @@
 					top: 0;
 					left: 0;
 					z-index: -1;
+					background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0 0);
 				}
 
 				@include breakpoint.up('md') {

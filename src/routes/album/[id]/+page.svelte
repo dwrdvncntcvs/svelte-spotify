@@ -5,15 +5,14 @@
 	export let data;
 
 	$: album = data.album;
-
-	$: console.log(data);
+	$: color = data.color;
 </script>
 
 <ItemPage
 	image={album.images.length > 0 ? album.images[0].url : undefined}
 	title={album.name}
 	type={album.type}
-	color={"orange"}
+	{color}
 >
 	<p slot="meta" class="meta">
 		<span class="artists">
@@ -31,6 +30,8 @@
 			{/each}
 		</ul>
 	</div>
+
+	<div style="height: 1000px;"></div>
 
 	<div class="credits">
 		<p class="date">
