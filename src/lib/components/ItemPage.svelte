@@ -14,7 +14,7 @@
 	/>
 	<div class="cover">
 		{#if image}
-			<img src={image} alt={title} />
+			<img class="cover-image" src={image} alt={title} />
 		{:else}
 			<div class="cover-placeholder">
 				<Music color="var(--light-gray)" focusable="false" aria-hidden />
