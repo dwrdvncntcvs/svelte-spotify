@@ -58,7 +58,11 @@
 		<p class="playlist-description">{@html playlist.description}</p>
 		<p class="meta">
 			<span>{playlist.owner.display_name}</span>
-			<span>{followersFormat.format(playlist.followers.total)}</span>
+			<span
+				>{followersFormat.format(playlist.followers.total)} Follower{playlist.followers.total > 0
+					? 's'
+					: ''}</span
+			>
 			<span>{playlist.tracks.total} Track{playlist.tracks.total > 0 ? 's' : ''}</span>
 		</p>
 	</div>
