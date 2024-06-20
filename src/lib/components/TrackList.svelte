@@ -108,7 +108,7 @@
 
 								isRemovingLoading = false;
 								// tracks = tracks.filter((val) => val.id !== track.id);
-								invalidate(`/api/spotify/playlists/${$page.params.id}`)
+								invalidate(`/api/spotify/playlists/${$page.params.id}`);
 							};
 						}}
 					>
@@ -135,6 +135,61 @@
 					>
 						<ListPlus aria-hidden focusable="false" />
 					</button>
+
+					{#if userPlaylist}
+						<div class="playlist-menu">
+							<div class="playlists-menu-content">
+								<form
+									method="POST"
+									action="/playlist?/addToPlaylist&redirect={$page.url.pathname}"
+									use:enhance={() => {
+										isLoading = true;
+										return ({ result }) => {
+											if (result.type === 'error') {
+												toasts.error(result.error.message);
+											}
+
+											if (result.type === 'redirect') {
+												const url = new URL(`${$page.url.origin}${result.location}`);
+
+												const success = url.searchParams.get('success');
+												const error = url.searchParams.get('error');
+
+												if (error) {
+													toast.error(error);
+												}
+
+												if (success) {
+													toast.success(success);
+												}
+											}
+
+											isLoading = false;
+											MicroModal.close(`add-pl-${track.id}`);
+										};
+									}}
+								>
+									<input type="text" hidden value={track.id} name="track" />
+
+									<div class="field">
+										<select name="playlist" aria-label="Playlist" id="playlist">
+											{#each userPlaylist as playlist}
+												<option value={playlist.id}>{playlist.name}</option>
+											{/each}
+										</select>
+									</div>
+									<div class="submit-button">
+										<Button element="button" type="submit" disabled={isLoading}>
+											Add <span class="visually-hidden">
+												{track.name} to selected playlist
+											</span>
+										</Button>
+									</div>
+								</form>
+							</div>
+						</div>
+					{/if}
+
 					<Modal id="add-pl-{track.id}" title={`Add "${track.name}" to Playlist`}>
 						{#if userPlaylist}
 							<div class="playlist-menu">
@@ -362,6 +417,16 @@
 				width: 30px;
 				margin-left: 15px;
 
+				:global(html.no-js) & {
+					width: auto;
+				}
+
+				.add-pl-button {
+					:global(html.no-js) & {
+						display: none;
+					}
+				}
+
 				.add-pl-button,
 				.remove-pl-button {
 					border: none;
@@ -386,6 +451,18 @@
 
 				.playlists-menu-content {
 					padding: 15px;
+
+					form {
+						:global(html.no-js) & {
+							display: flex;
+							align-items: center;
+
+							.submit-button {
+								margin-top: 0;
+								margin-left: 10px;
+							}
+						}
+					}
 
 					.field {
 						select {
