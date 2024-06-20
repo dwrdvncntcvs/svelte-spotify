@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { LogoutButton, Navigation } from '$lib';
 	import { ChevronDown, ExternalLink } from 'lucide-svelte';
-
 	import { page } from '$app/stores';
 	import { clickOutside } from '$actions';
+
+	export let userAllPlaylists: SpotifyApi.PlaylistObjectSimplified[] | undefined;
 
 	let optionElement: HTMLDivElement | undefined;
 
@@ -12,7 +13,7 @@
 
 <div class="content">
 	<div class="left">
-		<Navigation desktop={false} />
+		<Navigation desktop={false} {userAllPlaylists} />
 	</div>
 	<div class="right">
 		<div id="profile-button">

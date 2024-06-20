@@ -9,6 +9,7 @@
 	import { IconButton } from '$lib';
 
 	export let desktop: boolean = false;
+	export let userAllPlaylists: SpotifyApi.PlaylistObjectSimplified[] | undefined;
 
 	let isMobileMenuOpened = false;
 	$: isOpen = desktop || isMobileMenuOpened;
@@ -115,46 +116,63 @@
 			class:is-hidden={!isOpen}
 		>
 			<div class="nav-header">
-				<img src={logo} alt="Spotify" />
-				{#if !desktop}
-					<IconButton
-						bind:this={closeMenuButton}
-						on:click={closeMenu}
-						on:keydown={moveFocusToBottom}
-						icon={Close}
-						label="Close Menu"
-						class="close-menu-button"
-					/>
-				{/if}
+				<div class="logo-and-menu">
+					<img src={logo} alt="Spotify" />
+					{#if !desktop}
+						<IconButton
+							bind:this={closeMenuButton}
+							on:click={closeMenu}
+							on:keydown={moveFocusToBottom}
+							icon={Close}
+							label="Close Menu"
+							class="close-menu-button"
+						/>
+					{/if}
+					<ul>
+						{#each menuItems as { icon, label, link }, i (i)}
+							{@const iconProps = {
+								'aria-hidden': 'true',
+								focusable: 'false',
+								size: 26,
+								strokeWidth: 2
+							}}
+							<li>
+								{#if menuItems.length === i + 1}
+									<a
+										href={link}
+										bind:this={lastFocusableElement}
+										class:active={$page.url.pathname === link}
+										on:keydown={moveFocusToTop}
+									>
+										<svelte:component this={icon} {...iconProps} />
+										{label}
+									</a>
+								{:else}
+									<a href={link} class:active={$page.url.pathname === link}>
+										<svelte:component this={icon} {...iconProps} />
+										{label}
+									</a>
+								{/if}
+							</li>
+						{/each}
+					</ul>
+				</div>
 			</div>
-			<ul>
-				{#each menuItems as { icon, label, link }, i (i)}
-					{@const iconProps = {
-						'aria-hidden': 'true',
-						focusable: 'false',
-						size: 26,
-						strokeWidth: 2
-					}}
-					<li>
-						{#if menuItems.length === i + 1}
-							<a
-								href={link}
-								bind:this={lastFocusableElement}
-								class:active={$page.url.pathname === link}
-								on:keydown={moveFocusToTop}
-							>
-								<svelte:component this={icon} {...iconProps} />
-								{label}
-							</a>
-						{:else}
-							<a href={link} class:active={$page.url.pathname === link}>
-								<svelte:component this={icon} {...iconProps} />
-								{label}
-							</a>
-						{/if}
-					</li>
-				{/each}
-			</ul>
+
+			{#if userAllPlaylists && userAllPlaylists.length > 0}
+				<div class="all-playlists">
+					<ul>
+						{#each userAllPlaylists as playlist}
+							<li>
+								<a
+									class:active={$page.url.pathname === `/playlist/${playlist.id}`}
+									href="/playlist/{playlist.id}">{playlist.name}</a
+								>
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{/if}
 		</div>
 	</nav>
 </div>
@@ -166,7 +184,8 @@
 			top: 0;
 			.nav-content-inner {
 				@include breakpoint.up('md') {
-					display: block;
+					display: flex;
+					flex-direction: column;
 				}
 			}
 		}
@@ -189,7 +208,8 @@
 				opacity: 0;
 			}
 			@include breakpoint.down('md') {
-				display: block;
+				display: flex;
+				flex-direction: column;
 			}
 		}
 
@@ -210,12 +230,41 @@
 
 		nav {
 			.nav-content-inner {
-				padding: 20px;
+				// padding: 20px;
 				min-width: var(--side-bar-width);
 				background-color: var(--sidebar-color);
 				height: 100vh;
-				overflow: auto;
+				// overflow: auto;
 				display: none;
+				.logo-and-menu {
+					padding: 20px 20px 0;
+				}
+
+				.all-playlists {
+					flex: 1;
+					overflow: auto;
+					padding: 15px 20px;
+					border-top: 1px solid var(--border);
+
+					:global(html.no-js) & {
+						@include breakpoint.down('md') {
+							display: none;
+						}
+					}
+
+					ul {
+						list-style: none;
+						margin: 0;
+
+						li {
+							margin-bottom: 5px;
+
+							a {
+								margin: 0;
+							}
+						}
+					}
+				}
 
 				:global(html.no-js) & {
 					@include breakpoint.down('md') {

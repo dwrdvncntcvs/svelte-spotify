@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { endpoint } from '$helpers';
 	import { Button, ItemPage, Modal, Pagination, TrackList } from '$lib';
 	import PlaylistForm from '$lib/components/PlaylistForm.svelte';
 	import { toasts } from '$store';
 	import { Heart } from 'lucide-svelte';
+	import MicroModal from 'micromodal';
 	import type { ActionData } from './$types.js';
 	import type { ActionData as EditActionData } from './edit/$types';
-	import MicroModal from 'micromodal';
-	import { invalidate } from '$app/navigation';
 
 	export let data;
 	export let form: ActionData | EditActionData;
@@ -100,6 +100,7 @@
 							await applyAction(result);
 						}
 						followButton.focus();
+						invalidateAll();
 					};
 				}}
 				method="POST"
@@ -145,7 +146,7 @@
 		{playlist}
 		on:success={async () => {
 			MicroModal.close(`edit-playlist-${playlist.id}`);
-			await invalidate(`/api/spotify/playlists/${playlist.id}`);
+			await invalidateAll();
 		}}
 	/>
 </Modal>

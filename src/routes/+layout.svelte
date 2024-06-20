@@ -28,6 +28,7 @@
 
 	$: user = data.user;
 	$: color = $page.data?.color || 'var(--header-color)';
+	$: userAllPlaylists = data.userAllPlaylists;
 
 	afterNavigate(() => {
 		NProgress.done();
@@ -51,13 +52,13 @@
 <div id="main">
 	{#if user}
 		<div id="sidebar">
-			<Navigation desktop />
+			<Navigation desktop {userAllPlaylists} />
 		</div>
 	{/if}
 	<div id="content">
 		<div id="topbar" bind:this={topbar}>
 			<div class="topbar-bg" style:background-color={color} style:opacity={`${opacity}`}></div>
-			<Header />
+			<Header {userAllPlaylists} />
 		</div>
 		<main id="main-content" class:logged-in={user}>
 			<slot />
