@@ -128,7 +128,11 @@
 	</div>
 
 	{#if playlist.tracks?.items?.length}
-		<TrackList tracks={filteredTracks} />
+		<TrackList
+			tracks={filteredTracks}
+			isOwner={data.user?.id === playlist.owner.id}
+			userPlaylist={data.userAllPlaylists?.filter((val) => val.owner.id === data.user?.id)}
+		/>
 		<Pagination paginatedList={tracks} on:loadMore={loadMoreTracks} {isLoading} />
 	{:else}
 		<div class="empty-playlist">

@@ -1,13 +1,23 @@
 <script lang="ts">
 	import { msToTime } from '$helpers';
-	import { Player } from '$lib';
-	import { Clock8, ListPlus } from 'lucide-svelte';
+	import { Modal, Player } from '$lib';
+	import { Clock8, ListPlus, ListX } from 'lucide-svelte';
 	import playing from '$assets/playing.gif';
+	import MicroModal from 'micromodal';
+	import Button from './Button.svelte';
+	import { page } from '$app/stores';
+	import { enhance } from '$app/forms';
+	import toast from '$store/toast';
+	import { toasts } from '$store';
 
 	let currentlyPlayingTrack: string | null = null;
 	let isPlayerPaused: boolean = false;
 
 	export let tracks: SpotifyApi.TrackObjectFull[] | SpotifyApi.TrackObjectSimplified[];
+	export let isOwner: boolean = false;
+	export let userPlaylist: SpotifyApi.PlaylistObjectSimplified[] | undefined;
+
+	export let isLoading = false;
 </script>
 
 <div class="tracks">
@@ -21,7 +31,7 @@
 		<div class="duration-col">
 			<Clock8 aria-hidden focusable="false" color="var(--light-gray)" />
 		</div>
-		<div class="actions-col"></div>
+		<div class="actions-col" class:is-owner={isOwner}></div>
 	</div>
 	{#each tracks as track, i}
 		{@const number = i + 1}
@@ -67,8 +77,79 @@
 					{msToTime(track.duration_ms)}
 				</span>
 			</div>
-			<div class="actions-col">
-				<ListPlus aria-hidden focusable="false" />
+			<div class="actions-col" class:is-owner={isOwner}>
+				{#if isOwner}
+					<button>
+						<ListX aria-hidden focusable="false" />
+					</button>
+				{:else}
+					<button
+						disabled={!userPlaylist}
+						class="add-pl-button"
+						title="Add {track.name} to a playlist"
+						aria-label="Add {track.name} to a playlist"
+						on:click={() => {
+							MicroModal.show(`add-pl-${track.id}`);
+						}}
+					>
+						<ListPlus aria-hidden focusable="false" />
+					</button>
+					<Modal id="add-pl-{track.id}" title={`Add "${track.name}" to Playlist`}>
+						{#if userPlaylist}
+							<div class="playlist-menu">
+								<div class="playlists-menu-content">
+									<form
+										method="POST"
+										action="/playlist?/addToPlaylist&redirect={$page.url.pathname}"
+										use:enhance={() => {
+											isLoading = true;
+											return ({ result }) => {
+												if (result.type === 'error') {
+													toasts.error(result.error.message);
+												}
+
+												if (result.type === 'redirect') {
+													const url = new URL(`${$page.url.origin}${result.location}`);
+
+													const success = url.searchParams.get('success');
+													const error = url.searchParams.get('error');
+
+													if (error) {
+														toast.error(error);
+													}
+
+													if (success) {
+														toast.success(success);
+													}
+												}
+
+												isLoading = false;
+												MicroModal.close(`add-pl-${track.id}`);
+											};
+										}}
+									>
+										<input type="text" hidden value={track.id} name="track" />
+
+										<div class="field">
+											<select name="playlist" aria-label="Playlist" id="playlist">
+												{#each userPlaylist as playlist}
+													<option value={playlist.id}>{playlist.name}</option>
+												{/each}
+											</select>
+										</div>
+										<div class="submit-button">
+											<Button element="button" type="submit" disabled={isLoading}>
+												Add <span class="visually-hidden">
+													{track.name} to selected playlist
+												</span>
+											</Button>
+										</div>
+									</form>
+								</div>
+							</div>
+						{/if}
+					</Modal>
+				{/if}
 			</div>
 		</div>
 	{/each}
@@ -239,6 +320,44 @@
 			.actions-col {
 				width: 30px;
 				margin-left: 15px;
+
+				.add-pl-button {
+					border: none;
+					padding: 0;
+					margin: 0;
+					background: none;
+					cursor: pointer;
+					border-radius: 0;
+
+					:global(svg) {
+						stroke: var(--text-color);
+						vertical-align: middle;
+						width: 22px;
+						height: 22px;
+					}
+
+					&:disabled {
+						opacity: 0.8;
+						cursor: not-allowed;
+					}
+				}
+
+				.playlists-menu-content {
+					padding: 15px;
+
+					.field {
+						select {
+							width: 100px;
+							height: 35px;
+							border-radius: 4px;
+						}
+					}
+
+					.submit-button {
+						margin-top: 10px;
+						text-align: right;
+					}
+				}
 
 				@include breakpoint.down('md') {
 					:global(html.no-js) & {
