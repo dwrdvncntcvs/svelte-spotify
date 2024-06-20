@@ -11,7 +11,7 @@ export const actions: Actions = {
 		});
 
 		if (!res.ok) {
-			return fail(res.status, { followError: res.statusText });
+			return fail(res.status, { followError: res.statusText, followForm: true });
 		}
 	},
 	unfollowPlaylist: async ({ cookies, params, fetch }) => {
@@ -23,7 +23,7 @@ export const actions: Actions = {
 		});
 
 		if (!res.ok) {
-			return fail(res.status, { followError: res.statusText });
+			return fail(res.status, { followError: res.statusText, followForm: true });
 		}
 	}
 };

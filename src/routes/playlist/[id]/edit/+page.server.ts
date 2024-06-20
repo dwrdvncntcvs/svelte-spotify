@@ -38,8 +38,9 @@ export const actions: Actions = {
 				description: {
 					value: description
 				},
-				apiError: errorJson?.error?.message ?? 'An error has occurred'
-			} as DataObj);
+				apiError: errorJson?.error?.message ?? 'An error has occurred',
+				editForm: true
+			});
 		} else {
 			if (url.searchParams.has('redirect')) throw redirect(303, `/playlist/${params.id}`);
 		}
