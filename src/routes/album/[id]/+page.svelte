@@ -24,7 +24,10 @@
 		>
 	</p>
 
-	<TrackList tracks={album.tracks.items} />
+	<TrackList
+		tracks={album.tracks.items}
+		userPlaylist={data.userAllPlaylists?.filter((val) => val.owner.id === data.user?.id)}
+	/>
 
 	<div class="credits">
 		<p class="date">
