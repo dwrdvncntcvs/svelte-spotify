@@ -11,3 +11,4 @@ export { default as Player } from './components/Player.svelte';
 export { default as Toasts } from './components/Toasts.svelte';
 export { default as Pagination } from './components/Pagination.svelte';
 export { default as PlaylistForm } from './components/PlaylistForm.svelte';
+export { default as Modal } from './components/Modal.svelte';

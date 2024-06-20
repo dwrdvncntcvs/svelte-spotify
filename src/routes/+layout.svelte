@@ -7,6 +7,9 @@
 	import NProgress from 'nprogress';
 	import 'nprogress/nprogress.css';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
+	import MicroModal from 'micromodal';
+
+	if (browser) MicroModal.init();
 
 	NProgress.configure({
 		showSpinner: false
@@ -24,7 +27,7 @@
 	}
 
 	$: user = data.user;
-	$: color = $page.data.color || 'var(--header-color)';
+	$: color = $page.data?.color || 'var(--header-color)';
 
 	afterNavigate(() => {
 		NProgress.done();

@@ -789,6 +789,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/micromodal@npm:^0.3.5":
+  version: 0.3.5
+  resolution: "@types/micromodal@npm:0.3.5"
+  checksum: 10c0/a13cb64f0f8fa0506b640cc6a585ac1cf285a39724b01b0baef4d9ff04e9c3c6c3410074dcbcd03a48b79741a45e6d374cb68ed54ab298e096f0fc0a7610480a
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^20.14.5":
   version: 20.14.5
   resolution: "@types/node@npm:20.14.5"
@@ -2357,6 +2364,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"micromodal@npm:^0.4.10":
+  version: 0.4.10
+  resolution: "micromodal@npm:0.4.10"
+  checksum: 10c0/31df78f27ab82ab195c7e629411bc30c5032afe06a5d2926902c2bfd45babf71521d4e4bbe7d82c4243467c320ec212d75b2f49057b180a926ab095cbec907af
+  languageName: node
+  linkType: hard
+
 "min-indent@npm:^1.0.0":
   version: 1.0.1
   resolution: "min-indent@npm:1.0.1"
@@ -3435,6 +3449,7 @@ __metadata:
     "@sveltejs/kit": "npm:^2.0.0"
     "@sveltejs/vite-plugin-svelte": "npm:^3.0.0"
     "@types/eslint": "npm:^8.56.7"
+    "@types/micromodal": "npm:^0.3.5"
     "@types/node": "npm:^20.14.5"
     "@types/nprogress": "npm:^0.2.3"
     "@types/sharp": "npm:^0.32.0"
@@ -3447,6 +3462,7 @@ __metadata:
     eslint-plugin-svelte: "npm:^2.36.0"
     globals: "npm:^15.0.0"
     lucide-svelte: "npm:^0.395.0"
+    micromodal: "npm:^0.4.10"
     modern-normalize: "npm:^2.0.0"
     nprogress: "npm:^0.2.0"
     pkce-gen: "npm:^1.1.0"
