@@ -137,7 +137,7 @@
 					</button>
 
 					{#if userPlaylist}
-						<div class="playlist-menu">
+						<div class="playlist-menu" style="display: none;">
 							<div class="playlists-menu-content">
 								<form
 									method="POST"
@@ -448,7 +448,11 @@
 						cursor: not-allowed;
 					}
 				}
-
+				.playlist-menu {
+					:global(html.no-js) & {
+						display: block !important;
+					}
+				}
 				.playlists-menu-content {
 					padding: 15px;
 
