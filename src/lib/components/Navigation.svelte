@@ -238,6 +238,7 @@
 				display: none;
 				.logo-and-menu {
 					padding: 20px 20px 0;
+					overflow: hidden;
 				}
 
 				.all-playlists {
