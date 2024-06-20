@@ -9,6 +9,7 @@
 	import { enhance } from '$app/forms';
 	import toast from '$store/toast';
 	import { toasts } from '$store';
+	import { invalidate } from '$app/navigation';
 
 	let currentlyPlayingTrack: string | null = null;
 	let isPlayerPaused: boolean = false;
@@ -17,7 +18,8 @@
 	export let isOwner: boolean = false;
 	export let userPlaylist: SpotifyApi.PlaylistObjectSimplified[] | undefined;
 
-	export let isLoading = false;
+	let isLoading = false;
+	let isRemovingLoading = false;
 </script>
 
 <div class="tracks">
@@ -79,9 +81,48 @@
 			</div>
 			<div class="actions-col" class:is-owner={isOwner}>
 				{#if isOwner}
-					<button>
-						<ListX aria-hidden focusable="false" />
-					</button>
+					<form
+						action="/playlist/{$page.params.id}?/removeTrackFromPlaylist"
+						method="POST"
+						use:enhance={() => {
+							isRemovingLoading = true;
+							return ({ result }) => {
+								if (result.type === 'error') {
+									toasts.error(result.error.message);
+								}
+
+								if (result.type === 'redirect') {
+									const url = new URL(`${$page.url.origin}${result.location}`);
+
+									const success = url.searchParams.get('success');
+									const error = url.searchParams.get('error');
+
+									if (error) {
+										toast.error(error);
+									}
+
+									if (success) {
+										toast.success(success);
+									}
+								}
+
+								isRemovingLoading = false;
+								// tracks = tracks.filter((val) => val.id !== track.id);
+								invalidate(`/api/spotify/playlists/${$page.params.id}`)
+							};
+						}}
+					>
+						<input type="text" hidden name="track" value={track.id} />
+						<button
+							disabled={isRemovingLoading}
+							class="remove-pl-button"
+							type="submit"
+							title="Remove {track.name}"
+							aria-label="Remove {track.name}"
+						>
+							<ListX aria-hidden focusable="false" />
+						</button>
+					</form>
 				{:else}
 					<button
 						disabled={!userPlaylist}
@@ -321,7 +362,8 @@
 				width: 30px;
 				margin-left: 15px;
 
-				.add-pl-button {
+				.add-pl-button,
+				.remove-pl-button {
 					border: none;
 					padding: 0;
 					margin: 0;
@@ -347,7 +389,7 @@
 
 					.field {
 						select {
-							width: 100px;
+							width: 100%;
 							height: 35px;
 							border-radius: 4px;
 						}

@@ -62,7 +62,7 @@ h1 {
 	font-size: functions.toRem(16);
 }
 
-input {
+input, select {
 	border: none;
 	padding: 0 20px;
 	height: 35px;
@@ -71,7 +71,6 @@ input {
 	color: var(--medium-gray);
 }
 
-select,
 button {
 	&:focus-visible {
 		outline: 2px solid var(--accent-color);
