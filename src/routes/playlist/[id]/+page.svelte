@@ -69,7 +69,9 @@
 
 	<div class="playlist-actions">
 		{#if data?.user?.id === playlist.owner.id}
-			<Button element="a" variant="outline">Edit PLaylist</Button>
+			<Button element="a" variant="outline" href="/playlist/{data.playlist.id}/edit">
+				Edit PLaylist
+			</Button>
 		{:else if isFollowing !== null}
 			<form
 				use:enhance={() => {

@@ -1,10 +1,15 @@
 <script lang="ts">
 	import { Button } from '$lib';
 	import type { ActionData as AddActionData, PageData } from '../../routes/playlists/new/$types';
+	import type { ActionData as EditActionData } from '../../routes/playlist/[id]/edit/$types';
 
-	export let form: AddActionData;
+	export let form: AddActionData | EditActionData;
 	export let userId: string | undefined = undefined;
 	export let action: string | undefined = undefined;
+	export let playlist:
+		| SpotifyApi.PlaylistObjectFull
+		| SpotifyApi.PlaylistObjectSimplified
+		| undefined;
 </script>
 
 <form method="POST" {action}>
@@ -19,7 +24,7 @@
 			name="name"
 			id="playlist-name"
 			placeholder="Playlist name"
-			value={form?.name?.value || ''}
+			value={form?.name?.value || playlist?.name || ''}
 		/>
 		{#if form?.name?.error}
 			<p class="error">{form?.name?.error}</p>
@@ -31,8 +36,8 @@
 			type="text"
 			name="description"
 			id="playlist-description"
-			placeholder="Playlist description"
-			value={form?.description?.value || ''}
+			placeholder="Playlist description"  
+			value={form?.description?.value || playlist?.description || ''}
 		/>
 	</div>
 
@@ -41,7 +46,9 @@
 	{/if}
 
 	<div class="submit-button">
-		<Button element="button" type="submit">Create Playlist</Button>
+		<Button element="button" type="submit">
+			{playlist ? 'Save Playlist' : 'Create Playlist'}
+		</Button>
 	</div>
 </form>
 
