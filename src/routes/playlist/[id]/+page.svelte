@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import { Button, ItemPage, TrackList } from '$lib';
+	import { endpoint } from '$helpers';
+	import { Button, ItemPage, Pagination, TrackList } from '$lib';
 	import { toasts } from '$store';
 	import { Heart } from 'lucide-svelte';
 
@@ -38,7 +39,7 @@
 
 		isLoading = true;
 
-		const url = tracks.next.replace('https://api.spotify.com/v1/', '/api/spotify/');
+		const url = endpoint.spotifyApiUrl(tracks.next);
 		const res = await fetch(url);
 		const data = await res.json();
 
@@ -108,41 +109,7 @@
 
 	{#if playlist.tracks?.items?.length}
 		<TrackList tracks={filteredTracks} />
-		{#if tracks.next}
-			<div class="load-more">
-				<Button element="button" variant="outline" disabled={isLoading} on:click={loadMoreTracks}>
-					Load More <span class="visually-hidden">Tracks</span>
-				</Button>
-			</div>
-		{/if}
-		<div class="pagination">
-			<div class="previous">
-				{#if tracks.previous}
-					<Button
-						element="a"
-						variant="outline"
-						href="{$page.url.pathname}?{new URLSearchParams({
-							page: `${Number(currentPage) - 1}`
-						}).toString()}"
-					>
-						Previous Page
-					</Button>
-				{/if}
-			</div>
-			<div class="next">
-				{#if tracks.next}
-					<Button
-						element="a"
-						variant="outline"
-						href="{$page.url.pathname}?{new URLSearchParams({
-							page: `${Number(currentPage) + 1}`
-						}).toString()}"
-					>
-						Next Page
-					</Button>
-				{/if}
-			</div>
-		</div>
+		<Pagination paginatedList={tracks} on:loadMore={loadMoreTracks} {isLoading} />
 	{:else}
 		<div class="empty-playlist">
 			<p>No items added to this playlist yet.</p>
@@ -183,25 +150,6 @@
 
 		:global(a) {
 			margin: 0 10px;
-		}
-	}
-
-	.load-more {
-		padding: 15px;
-		text-align: center;
-
-		:global(html.no-js) & {
-			display: none;
-		}
-	}
-
-	.pagination {
-		display: none;
-		justify-content: space-between;
-		align-items: center;
-		margin-top: 40px;
-		:global(html.no-js) & {
-			display: flex;
 		}
 	}
 

@@ -9,3 +9,4 @@ export { default as ItemPage } from './components/ItemPage.svelte';
 export { default as TrackList } from './components/TrackList.svelte';
 export { default as Player } from './components/Player.svelte';
 export { default as Toasts } from './components/Toasts.svelte';
+export { default as Pagination } from './components/Pagination.svelte';
