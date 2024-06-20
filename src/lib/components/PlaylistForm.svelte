@@ -2,6 +2,10 @@
 	import { Button } from '$lib';
 	import type { ActionData as AddActionData, PageData } from '../../routes/playlists/new/$types';
 	import type { ActionData as EditActionData } from '../../routes/playlist/[id]/edit/$types';
+	import { applyAction, enhance } from '$app/forms';
+	import { createEventDispatcher } from 'svelte';
+
+	let isLoading = false;
 
 	export let form: AddActionData | EditActionData;
 	export let userId: string | undefined = undefined;
@@ -10,9 +14,28 @@
 		| SpotifyApi.PlaylistObjectFull
 		| SpotifyApi.PlaylistObjectSimplified
 		| undefined;
+
+	const dispatch = createEventDispatcher<{ success: {}; redirect: {} }>();
 </script>
 
-<form method="POST" {action}>
+<form
+	method="POST"
+	{action}
+	use:enhance={() => {
+		isLoading = true;
+		return async ({ result }) => {
+			await applyAction(result);
+			isLoading = false;
+			if (result.type === 'success') {
+				dispatch('success', {});
+			}
+
+			if (result.type === 'redirect') {
+				dispatch('redirect', {});
+			}
+		};
+	}}
+>
 	{#if userId}
 		<input type="text" hidden name="userId" value={userId} />
 	{/if}
@@ -36,7 +59,7 @@
 			type="text"
 			name="description"
 			id="playlist-description"
-			placeholder="Playlist description"  
+			placeholder="Playlist description"
 			value={form?.description?.value || playlist?.description || ''}
 		/>
 	</div>
@@ -46,7 +69,7 @@
 	{/if}
 
 	<div class="submit-button">
-		<Button element="button" type="submit">
+		<Button element="button" type="submit" disabled={isLoading}>
 			{playlist ? 'Save Playlist' : 'Create Playlist'}
 		</Button>
 	</div>

@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { endpoint } from '$helpers';
-	import { Button, Card, Modal, Pagination } from '$lib';
+	import { Button, Card, Modal, Pagination, PlaylistForm } from '$lib';
 	import { error } from '@sveltejs/kit';
 	import MicroModal from 'micromodal';
+	import type { ActionData } from './new/$types';
 
 	export let data;
+	export let form: ActionData;
 
 	let isLoading = false;
 
@@ -54,7 +56,9 @@
 	{/if}
 </div>
 
-<Modal id="add-playlist-modal" title="Add a New Playlist">Some Content</Modal>
+<Modal id="add-playlist-modal" title="Add a New Playlist">
+	<PlaylistForm {form} userId={data.user?.id} action="/playlists/new" />
+</Modal>
 
 <style lang="scss">
 	.content {
