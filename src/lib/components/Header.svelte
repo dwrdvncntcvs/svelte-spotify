@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LogoutButton, Navigation, SearchForm } from '$lib';
+	import { LogoutButton, NavControls, Navigation, SearchForm } from '$lib';
 	import { ChevronDown, ExternalLink } from 'lucide-svelte';
 	import { page } from '$app/stores';
 	import { clickOutside } from '$actions';
@@ -16,6 +16,7 @@
 <div class="content">
 	<div class="left">
 		<Navigation desktop={false} {userAllPlaylists} />
+		<NavControls />
 		{#if isOnSearchPage}
 			<div class="search-form">
 				<SearchForm />

@@ -13,3 +13,4 @@ export { default as Pagination } from './components/Pagination.svelte';
 export { default as PlaylistForm } from './components/PlaylistForm.svelte';
 export { default as Modal } from './components/Modal.svelte';
 export { default as SearchForm } from './components/SearchForm.svelte';
+export { default as NavControls } from './components/NavControls.svelte';
