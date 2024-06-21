@@ -62,7 +62,8 @@ h1 {
 	font-size: functions.toRem(16);
 }
 
-input, select {
+input,
+select {
 	border: none;
 	padding: 0 20px;
 	height: 35px;
@@ -152,10 +153,13 @@ p {
 }
 
 @for $i from 1 through 3 {
-	.truncate-#{i} {
+	.truncate-#{$i} {
 		display: -webkit-box;
 		-webkit-line-clamp: $i;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
+		text-overflow: ellipsis;
+		/* Optionally, you can add these styles to prevent wrapping */
+		/* white-space: nowrap; */
 	}
 }

@@ -4,7 +4,7 @@
 	import { Button, LogoutButton } from '$lib';
 
 	let isRetrying = false;
-	let retryRoutes = ['/album/[id]', '/playlist/[id]', '/artist/[id]'];
+	let retryRoutes = ['/album/[id]', '/playlist/[id]', '/artist/[id]', '/search/[query]'];
 </script>
 
 <svelte:head>
@@ -31,13 +31,14 @@
 
 	{#if ![404, 401].includes($page.status) && $page.route.id && retryRoutes.includes($page.route.id)}
 		<div class="buttons">
-			<button
+			<Button
+				element="button"
 				disabled={isRetrying}
 				on:click={async () => {
 					isRetrying = true;
 					await invalidate(`app:${$page.route.id}`);
 					isRetrying = false;
-				}}>Retry</button
+				}}>Retry</Button
 			>
 		</div>
 	{/if}
