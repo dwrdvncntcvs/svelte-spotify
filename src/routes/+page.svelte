@@ -16,7 +16,7 @@
 		if (data.newReleases) {
 			sections.push({
 				title: 'New Releases',
-				path: '/sections/new-releases',
+				path: '/section/new-releases',
 				items: data.newReleases.albums.items
 			});
 			sections = sections;
@@ -25,7 +25,7 @@
 		if (data.featuredPlaylist) {
 			sections.push({
 				title: 'Featured Playlists',
-				path: '/sections/featured-playlists',
+				path: '/section/featured-playlists',
 				items: data.featuredPlaylist.playlists.items
 			});
 			sections = sections;

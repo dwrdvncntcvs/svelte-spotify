@@ -4,7 +4,13 @@
 	import { Button, LogoutButton } from '$lib';
 
 	let isRetrying = false;
-	let retryRoutes = ['/album/[id]', '/playlist/[id]', '/artist/[id]', '/search/[query]'];
+	let retryRoutes = [
+		'/album/[id]',
+		'/playlist/[id]',
+		'/artist/[id]',
+		'/search/[query]',
+		'/[list=list]/[...rest]'
+	];
 </script>
 
 <svelte:head>
