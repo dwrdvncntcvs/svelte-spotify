@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LogoutButton, Navigation } from '$lib';
+	import { LogoutButton, Navigation, SearchForm } from '$lib';
 	import { ChevronDown, ExternalLink } from 'lucide-svelte';
 	import { page } from '$app/stores';
 	import { clickOutside } from '$actions';
@@ -9,11 +9,18 @@
 	let optionElement: HTMLDivElement | undefined;
 
 	$: user = $page.data.user;
+
+	$: isOnSearchPage = $page.url.pathname.startsWith('/search');
 </script>
 
 <div class="content">
 	<div class="left">
 		<Navigation desktop={false} {userAllPlaylists} />
+		{#if isOnSearchPage}
+			<div class="search-form">
+				<SearchForm />
+			</div>
+		{/if}
 	</div>
 	<div class="right">
 		<div id="profile-button">
@@ -72,6 +79,18 @@
 
 		:global(html.no-js) & {
 			justify-content: start;
+		}
+	}
+
+	.left {
+		display: flex;
+		justify-content: center;
+		.search-form {
+			display: none;
+
+			@include breakpoint.up('lg') {
+				display: block;
+			}
 		}
 	}
 

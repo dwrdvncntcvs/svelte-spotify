@@ -9,7 +9,7 @@
 	<div class="items">
 		{#each categories as category}
 			<div class="item">
-				<a href="/category/{category.id}"
+				<a href="/search/category/{category.id}"
 					>{#if category.icons.length > 0}
 						<img src={category.icons[0].url} alt="" />
 						<span class="truncate-1">{category.name}</span>

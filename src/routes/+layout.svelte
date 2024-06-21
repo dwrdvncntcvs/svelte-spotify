@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { Header, Navigation, Toasts } from '$lib';
+	import { Header, Navigation, SearchForm, Toasts } from '$lib';
 	import '$styles/main.scss';
 	import 'modern-normalize/modern-normalize.css';
 	import { page } from '$app/stores';
@@ -41,6 +41,8 @@
 	beforeNavigate(() => {
 		NProgress.start();
 	});
+
+	$: isOnSearchPage = $page.url.pathname.startsWith('/search');
 </script>
 
 <svelte:window bind:scrollY />
@@ -75,6 +77,11 @@
 			<Header {userAllPlaylists} />
 		</div>
 		<main id="main-content" class:logged-in={user}>
+			{#if isOnSearchPage}
+				<div class="search-form">
+					<SearchForm />
+				</div>
+			{/if}
 			<slot />
 		</main>
 	</div>
@@ -162,6 +169,18 @@
 				width: 100%;
 				height: 100%;
 				padding: 30px 15px 60px;
+
+				.search-form {
+					display: none;
+
+					@include breakpoint.down('lg') {
+						display: block;
+					}
+
+					:global(input) {
+						width: 100%;
+					}
+				}
 				&.logged-in {
 					padding-top: calc(30px + var(--header-height));
 
