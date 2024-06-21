@@ -9,7 +9,7 @@
 	<div class="items">
 		{#each categories as category}
 			<div class="item">
-				<a href="/search/category/{category.id}"
+				<a href="/category/{category.id}"
 					>{#if category.icons.length > 0}
 						<img src={category.icons[0].url} alt="" />
 						<span class="truncate-1">{category.name}</span>
@@ -37,7 +37,7 @@
 					font-size: functions.toRem(16);
 					font-weight: 700;
 					position: absolute;
-                    left: 0;
+					left: 0;
 					bottom: 20px;
 					width: 100%;
 					text-align: center;

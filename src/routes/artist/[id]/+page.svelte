@@ -33,7 +33,9 @@
 			<div class="content-row">
 				<div class="content-header">
 					<h2 class="section-title">Album</h2>
-					<Button element="a" variant="outline">View All</Button>
+					<Button element="a" variant="outline" href={`/artist/${artist.id}/albums`}
+						>View All</Button
+					>
 				</div>
 				<div class="grid-items">
 					{#each albums.items as album}
@@ -46,7 +48,9 @@
 			<div class="content-row">
 				<div class="content-header">
 					<h2 class="section-title">Appears On</h2>
-					<Button element="a" variant="outline">View All</Button>
+					<Button element="a" variant="outline" href={`/artist/${artist.id}/appears-on`}
+						>View All</Button
+					>
 				</div>
 				<div class="grid-items">
 					{#each appearsOn.items as album}
@@ -59,7 +63,9 @@
 			<div class="content-row">
 				<div class="content-header">
 					<h2 class="section-title">Related Artists</h2>
-					<Button element="a" variant="outline">View All</Button>
+					<Button element="a" variant="outline" href={`/artist/${artist.id}/related-artists`}
+						>View All</Button
+					>
 				</div>
 				<div class="grid-items">
 					{#each relatedArtists.artists.splice(0, 6) as artist}
